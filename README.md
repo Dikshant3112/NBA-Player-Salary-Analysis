@@ -1,155 +1,79 @@
-# NBA Player Salary Analysis 📊
+# NBA Player Salary Analysis
 
-Analyze NBA player performance data to identify key factors influencing player salaries using Python 3, machine learning, and statistical analysis.
+A production-style data analysis project that explains **what drives NBA player contract value** and generates salary forecasts for upcoming free agents.
 
-## 🎯 Objective
+## Why this repo is interesting
 
-Determine which performance metrics most strongly influence NBA player salaries through comprehensive data analysis, regression modeling, and visualization.
+This project goes beyond static charts by combining:
+- Historical player performance and contract data
+- Salary-cap normalization across different eras
+- A reproducible machine learning pipeline
+- Forecasting for players in the workbook's `Forecast Data` sheet
 
-## 📋 Features
+## What it does
 
-### Data Processing
-- ✅ Excel file loading with multiple sheets
-- ✅ Automatic data cleaning and preprocessing
-- ✅ Salary cap normalization for fair year-to-year comparison
-- ✅ Missing value handling and data validation
+The script reads `data/NBA Talent Analysis Part BandC Data.xlsx` and performs:
 
-### Analysis
-- ✅ Correlation analysis between salary and performance metrics
-- ✅ Linear regression modeling with standardized features
-- ✅ R-squared model performance metrics
-- ✅ Statistical significance testing
+1. Data loading from `NBA Data` and `NBA Salary Cap History`
+2. Data cleaning and numeric feature preparation
+3. Feature engineering (`Salary_to_Cap`, `Log_Salary`)
+4. Linear regression model training with standardized features
+5. Evaluation with test-set **R²** and **RMSE**
+6. Forecasting salaries for players in `Forecast Data`
+7. Artifact generation in `output/`
 
-### Visualizations
-- ✅ Salary distribution histograms (log and normalized)
-- ✅ Correlation heatmap
-- ✅ Performance metric scatter plots with trend lines
-- ✅ Professional-grade charts saved to `output/` directory
+## Repository structure
 
-## 🛠️ Tech Stack
+- `nba_salary_analysis.py` – end-to-end analysis + forecasting pipeline
+- `data/` – source Excel workbook
+- `output/` – generated charts, report, and forecast CSV
+- `requirements.txt` – Python dependencies
 
-**Language:** Python 3.8+
+## Setup
 
-**Libraries:**
-- `pandas` - Data manipulation and analysis
-- `numpy` - Numerical computing
-- `matplotlib` - Visualization
-- `seaborn` - Statistical visualization
-- `scikit-learn` - Machine learning and preprocessing
-- `scipy` - Statistical analysis
-- `openpyxl` - Excel file handling
-
-## 📥 Installation
-
-### Prerequisites
-- Python 3.8 or higher
-- pip package manager
-
-### Setup
-
-1. Clone the repository:
 ```bash
 git clone https://github.com/Dikshant3112/NBA-Player-Salary-Analysis.git
 cd NBA-Player-Salary-Analysis
-```
-
-2. Install dependencies:
-```bash
 pip install -r requirements.txt
 ```
 
-3. Prepare your data:
-   - Place your Excel file in the `data/` directory
-   - Update the file path in `nba_salary_analysis.py` if needed
-   - File should have sheets named "NBA Data" and "NBA Salary Cap History"
+## Run
 
-4. Run the analysis:
 ```bash
 python nba_salary_analysis.py
 ```
 
-## 📊 Usage
+Optional arguments:
 
-### Basic Usage
-```python
-from nba_salary_analysis import NBAAnalysis
-
-# Initialize analysis
-analysis = NBAAnalysis("data/NBA_data.xlsx")
-
-# Run complete pipeline
-analysis.run_analysis()
+```bash
+python nba_salary_analysis.py --data "data/NBA Talent Analysis Part BandC Data.xlsx" --output output
 ```
 
-### Individual Components
-```python
-# Load and clean data
-analysis.load_data()
-analysis.clean_data()
-analysis.merge_datasets()
-analysis.feature_engineering()
+## Outputs
 
-# Perform specific analyses
-correlations = analysis.correlation_analysis()
-regression_results = analysis.regression_analysis()
+After running, you will get:
 
-# Generate visualizations
-analysis.visualize_salary_distribution()
-analysis.visualize_correlation_heatmap()
-analysis.visualize_relationships()
-```
+- `output/salary_distribution.png`
+- `output/correlation_heatmap.png`
+- `output/feature_importance.png`
+- `output/actual_vs_predicted.png`
+- `output/forecast_estimates.csv`
+- `output/analysis_report.txt`
 
-## 📈 Output
+## Example insights you can extract
 
-The analysis generates the following outputs in the `output/` directory:
+- Which stats most strongly increase expected salary
+- How much of the salary cap a player is likely to consume
+- Whether model predictions track real salary outcomes
 
-1. **salary_distribution.png** - Histograms showing salary distribution
-2. **correlation_heatmap.png** - Heatmap of metric correlations
-3. **relationships.png** - Scatter plots with trend lines
-4. **Console logs** - Detailed analysis results and statistics
+## Tech stack
 
-## 🔍 Key Metrics Analyzed
+- Python 3.10+
+- pandas, numpy
+- scikit-learn
+- seaborn, matplotlib
+- openpyxl
 
-- **MP** (Minutes Played) - Player usage level
-- **WS** (Win Shares) - Player contribution to wins
-- **FG%** (Field Goal Percentage) - Shooting efficiency
-- **USG%** (Usage Percentage) - Percentage of team plays used
-- **Salary/Cap Ratio** - Normalized salary across different eras
+## License
 
-## 📚 Methodology
-
-1. **Data Loading** - Read NBA stats and salary cap data from Excel
-2. **Data Cleaning** - Handle missing values, standardize column names
-3. **Feature Engineering** - Create normalized and log-transformed salary metrics
-4. **Exploratory Analysis** - Calculate correlations and distributions
-5. **Regression Modeling** - Build predictive models with standardized features
-6. **Visualization** - Generate professional charts and heatmaps
-
-## 🎓 Key Insights
-
-- Win Shares shows strong positive correlation with player salaries
-- Minutes Played is a key predictor of salary levels
-- Salary normalization by cap reveals consistent market patterns across years
-- Usage percentage and shooting efficiency also influence salary negotiations
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to:
-- Report bugs and issues
-- Suggest new features
-- Submit pull requests
-- Improve documentation
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## ✉️ Contact
-
-For questions or feedback, please reach out to the repository maintainer.
-
----
-
-**Last Updated:** 2026-04-18 13:15:53
-**Python Version:** 3.8+
-**Status:** Active Development
+MIT License (see `LICENSE`).
