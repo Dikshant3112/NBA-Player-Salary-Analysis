@@ -146,11 +146,13 @@ class NBAAnalysis:
 
         forecast_df = pd.read_excel(self.workbook_path, sheet_name="Forecast Data")
         merged = forecast_df.merge(self.cap_df, how="left", on="Deal_Year")
+        latest_cap = float(self.cap_df.sort_values("Deal_Year")["Salary Cap"].iloc[-1])
+        merged["Salary Cap"] = merged["Salary Cap"].fillna(latest_cap)
 
         for col in self.FEATURE_COLUMNS:
             merged[col] = pd.to_numeric(merged[col], errors="coerce")
 
-        valid = merged.dropna(subset=self.FEATURE_COLUMNS)
+        valid = merged.dropna(subset=self.FEATURE_COLUMNS).copy()
         valid["Predicted Salary"] = self.model.predict(valid[self.FEATURE_COLUMNS])
         valid["Predicted Salary"] = valid["Predicted Salary"].clip(lower=0)
         valid["Predicted Salary to Cap"] = valid["Predicted Salary"] / valid["Salary Cap"]
