@@ -59,9 +59,8 @@ pip install -r requirements.txt
 ```
 
 3. Prepare your data:
-   - Place your Excel file in the `data/` directory
-   - Update the file path in `nba_salary_analysis.py` if needed
-   - File should have sheets named "NBA Data" and "NBA Salary Cap History"
+   - The workbook `NBA Talent Analysis Part BandC Data.xlsx` is already in the `data/` directory
+   - It must contain sheets named **"NBA Data"** and **"NBA Salary Cap History"**
 
 4. Run the analysis:
 ```bash
@@ -74,10 +73,8 @@ python nba_salary_analysis.py
 ```python
 from nba_salary_analysis import NBAAnalysis
 
-# Initialize analysis
-analysis = NBAAnalysis("data/NBA_data.xlsx")
-
-# Run complete pipeline
+# Initialize and run the full pipeline
+analysis = NBAAnalysis("data/NBA Talent Analysis Part BandC Data.xlsx")
 analysis.run_analysis()
 ```
 
@@ -127,10 +124,11 @@ The analysis generates the following outputs in the `output/` directory:
 
 ## 🎓 Key Insights
 
-- Win Shares shows strong positive correlation with player salaries
-- Minutes Played is a key predictor of salary levels
-- Salary normalization by cap reveals consistent market patterns across years
-- Usage percentage and shooting efficiency also influence salary negotiations
+- **Points per season** and **Win Shares** are the two strongest salary predictors (r ≈ +0.79 and +0.77 respectively)
+- **Minutes Played** is the third-best single predictor (r ≈ +0.65), reflecting how teams pay for availability and durability
+- A multiple regression model using these metrics explains roughly **61 % of salary variance** (R² ≈ 0.61)
+- Normalising salary by the league cap reveals consistent market patterns across the 2016–2019 contract years
+- **Usage rate** and **shooting efficiency (FG%)** have a measurable but smaller effect on salary negotiations
 
 ## 🤝 Contributing
 
@@ -150,6 +148,6 @@ For questions or feedback, please reach out to the repository maintainer.
 
 ---
 
-**Last Updated:** 2026-04-18 13:15:53
-**Python Version:** 3.8+
+**Last Updated:** 2026-04-18  
+**Python Version:** 3.8+  
 **Status:** Active Development
