@@ -1,4 +1,4 @@
-#Determinants of NBA Player Salaries 📊
+Determinants of NBA Player Salaries 📊
 
 ## Objective
 Analyze NBA player performance data to identify key factors influencing player salaries.
