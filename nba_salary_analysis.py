@@ -1,34 +1,42 @@
+import logging
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 
-# Load dataset
-nba = pd.read_excel(r"C:\Users\diksh\Desktop\New folder\NBA Talent Analysis Part BandC data.xlsx", sheet_name="NBA Data")
-cap = pd.read_excel(r"C:\Users\diksh\Desktop\New folder\NBA Talent Analysis Part BandC data.xlsx", sheet_name="NBA Salary Cap History")
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
-# Clean column names
-nba.rename(columns={"FG%": "FG_pct", "3P%": "3P_pct", "USG%": "USG_pct"}, inplace=True)
+class NBAAnalysis:
+    def __init__(self, data: pd.DataFrame):
+        self.data = data
 
-# Convert numeric columns
-nba = nba.apply(pd.to_numeric, errors='ignore')
+    def preprocess_data(self) -> None:
+        # Implement data preprocessing steps
+        logging.info("Preprocessing data...")
+        self.data.dropna(inplace=True)  # Remove missing values
 
-# Extract year and clean cap data
-cap['Deal_Year'] = cap.iloc[:,0].astype(str).str.extract(r'(\d{4})').astype(float)
-cap['SalaryCap'] = pd.to_numeric(cap.iloc[:,1], errors='coerce')
+    def perform_regression(self) -> None:
+        logging.info("Performing regression analysis...")
+        X = self.data[['feature1', 'feature2']]  # replace with actual feature names
+        y = self.data['salary']
+        model = LinearRegression()
+        model.fit(X, y)
+        logging.info("Regression analysis complete.")
+        logging.info(f'Model coefficients: {model.coef_}')
 
-# Merge datasets
-nba = nba.merge(cap[['Deal_Year','SalaryCap']], on='Deal_Year', how='left')
+    def visualize(self) -> None:
+        logging.info("Visualizing data...")
+        plt.scatter(self.data['feature1'], self.data['salary'])  # replace with actual feature names
+        plt.title('NBA Salary Analysis')
+        plt.xlabel('Feature 1')  # replace with actual feature name
+        plt.ylabel('Salary')
+        plt.show()
 
-# Feature engineering
-nba['cap_norm_salary'] = nba['Deal Average Salary'] / nba['SalaryCap']
-nba['log_cap_salary'] = np.log(nba['cap_norm_salary'])
 
-# Simple visualization
-plt.hist(nba['log_cap_salary'].dropna(), bins=30)
-plt.title("Distribution of log(salary/cap)")
-plt.xlabel("log(salary/cap)")
-plt.ylabel("Count")
-plt.show()
+# Load data
+# data = pd.read_csv('nba_data.csv')  # Example of loading data
 
-# Basic correlation
-print(nba[['log_cap_salary','MP','WS']].corr())
+# analysis = NBAAnalysis(data)
+# analysis.preprocess_data()
+# analysis.perform_regression()
+# analysis.visualize()
